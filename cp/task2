@@ -1,0 +1,165 @@
+class Book:
+    def __init__(self, book_id, title, author, genre):
+        self.book_id = book_id
+        self.title = title
+        self.author = author
+        self.genre = genre
+
+    def __str__(self):
+        return f"ID: {self.book_id}, Title: {self.title}, Author: {self.author}, Genre: {self.genre}"
+
+
+class Member:
+    def __init__(self, member_id, name, email):
+        self.member_id = member_id
+        self.name = name
+        self.email = email
+
+    def __str__(self):
+        return f"ID: {self.member_id}, Name: {self.name}, Email: {self.email}"
+
+
+class LibraryManagementSystem:
+    def __init__(self):
+        self.books = []
+        self.members = []
+
+    # Book Operations
+    def add_book(self, title, author, genre):
+        book_id = len(self.books) + 1
+        new_book = Book(book_id, title, author, genre)
+        self.books.append(new_book)
+        print(f"Book '{title}' added successfully.")
+
+    def list_books(self):
+        if not self.books:
+            print("No books in the library.")
+        else:
+            for book in self.books:
+                print(book)
+
+    def update_book(self, book_id, title=None, author=None, genre=None):
+        for book in self.books:
+            if book.book_id == book_id:
+                book.title = title or book.title
+                book.author = author or book.author
+                book.genre = genre or book.genre
+                print(f"Book ID {book_id} updated successfully.")
+                return
+        print(f"Book with ID {book_id} not found.")
+
+    def delete_book(self, book_id):
+        for book in self.books:
+            if book.book_id == book_id:
+                self.books.remove(book)
+                print(f"Book ID {book_id} deleted successfully.")
+                return
+        print(f"Book with ID {book_id} not found.")
+
+    # Member Operations
+    def add_member(self, name, email):
+        member_id = len(self.members) + 1
+        new_member = Member(member_id, name, email)
+        self.members.append(new_member)
+        print(f"Member '{name}' added successfully.")
+
+    def list_members(self):
+        if not self.members:
+            print("No members registered.")
+        else:
+            for member in self.members:
+                print(member)
+
+    def update_member(self, member_id, name=None, email=None):
+        for member in self.members:
+            if member.member_id == member_id:
+                member.name = name or member.name
+                member.email = email or member.email
+                print(f"Member ID {member_id} updated successfully.")
+                return
+        print(f"Member with ID {member_id} not found.")
+
+    def delete_member(self, member_id):
+        for member in self.members:
+            if member.member_id == member_id:
+                self.members.remove(member)
+                print(f"Member ID {member_id} deleted successfully.")
+                return
+        print(f"Member with ID {member_id} not found.")
+
+
+def main():
+    lms = LibraryManagementSystem()
+
+    while True:
+        print("\nLibrary Management System Menu")
+        print("1. Book Management")
+        print("2. Member Management")
+        print("3. Exit")
+        choice = input("Choose an option: ")
+
+        if choice == "1":
+            # Book Management
+            print("\nBook Management Menu")
+            print("1. Add Book")
+            print("2. List Books")
+            print("3. Update Book")
+            print("4. Delete Book")
+            print("5. Go Back")
+            book_choice = input("Choose an option: ")
+
+            if book_choice == "1":
+                title = input("Enter book title: ")
+                author = input("Enter book author: ")
+                genre = input("Enter book genre: ")
+                lms.add_book(title, author, genre)
+            elif book_choice == "2":
+                lms.list_books()
+            elif book_choice == "3":
+                book_id = int(input("Enter book ID to update: "))
+                title = input("Enter new title (or press Enter to skip): ")
+                author = input("Enter new author (or press Enter to skip): ")
+                genre = input("Enter new genre (or press Enter to skip): ")
+                lms.update_book(book_id, title, author, genre)
+            elif book_choice == "4":
+                book_id = int(input("Enter book ID to delete: "))
+                lms.delete_book(book_id)
+            elif book_choice == "5":
+                continue
+
+        elif choice == "2":
+            # Member Management
+            print("\nMember Management Menu")
+            print("1. Add Member")
+            print("2. List Members")
+            print("3. Update Member")
+            print("4. Delete Member")
+            print("5. Go Back")
+            member_choice = input("Choose an option: ")
+
+            if member_choice == "1":
+                name = input("Enter member name: ")
+                email = input("Enter member email: ")
+                lms.add_member(name, email)
+            elif member_choice == "2":
+                lms.list_members()
+            elif member_choice == "3":
+                member_id = int(input("Enter member ID to update: "))
+                name = input("Enter new name (or press Enter to skip): ")
+                email = input("Enter new email (or press Enter to skip): ")
+                lms.update_member(member_id, name, email)
+            elif member_choice == "4":
+                member_id = int(input("Enter member ID to delete: "))
+                lms.delete_member(member_id)
+            elif member_choice == "5":
+                continue
+
+        elif choice == "3":
+            print("Exiting the system. Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+
+if __name__ == "__main__":
+    main()
